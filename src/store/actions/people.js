@@ -7,14 +7,21 @@ export function registerPerson(person) {
 }
 
 export async function getPeople(dispatch) {
+	const token = localStorage.getItem('token');
+
+	if (token) {
+		apiDBC.defaults.headers.common['Authorization'] = token;
+	}
+
 	try {
-		const { data } = await apiDBC.get('/pessoa?tamanhoDasPaginas=200');
+		const { data } = await apiDBC.get('/pessoa?tamanhoDasPaginas=150');
 		const list = data.content;
 		console.log('getpeople', list);
-		return {
+		const currentList = {
 			type: 'GET_PEOPLE',
 			peopleList: list,
 		};
+		dispatch(currentList);
 	} catch (error) {
 		console.log(error);
 	}
