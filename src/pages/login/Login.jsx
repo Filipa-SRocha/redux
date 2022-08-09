@@ -2,6 +2,7 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import * as AuthActions from '../../store/actions/auth';
+import { handleLogin } from '../../store/actions/auth';
 import { apiDBC } from '../../api';
 
 const Login = ({ auth, dispatch }) => {
@@ -10,20 +11,21 @@ const Login = ({ auth, dispatch }) => {
 		senha: Yup.string().required('Por favor digite a sua senha!'),
 	});
 
-	const handleLoginClick = async (values) => {
-		try {
-			const { data } = await apiDBC.post('/auth', values);
-			const logado = {
-				type: 'SET_LOGIN',
-				token: data,
-			};
-			dispatch(logado);
-			//window.location.href = '/people';
-			//handleLogin(token);
-		} catch (error) {
-			console.log('Senha ou login inválido');
-		}
-	};
+	// const handleLogin = async (values) => {
+	// 	try {
+	// 		const { data } = await apiDBC.post('/auth', values);
+	// 		const logado = {
+	// 			type: 'SET_LOGIN',
+	// 			token: data,
+	// 		};
+	// 		dispatch(logado);
+
+	// 		//window.location.href = '/people';
+	// 		//handleLogin(token);
+	// 	} catch (error) {
+	// 		console.log('Senha ou login inválido');
+	// 	}
+	// };
 
 	return (
 		<div>
@@ -34,7 +36,7 @@ const Login = ({ auth, dispatch }) => {
 				}}
 				validationSchema={SignInSchema}
 				onSubmit={(values) => {
-					handleLoginClick(values);
+					handleLogin(values, dispatch);
 				}}
 			>
 				{({ errors, touched }) => (
@@ -62,7 +64,7 @@ const Login = ({ auth, dispatch }) => {
 };
 
 const mapStateToProps = (state) => ({
-	auth: state.authReducer.token,
+	auth: state.authReducer.auth,
 });
 
 // const mapDispatchToProps = (dispatch) => ({

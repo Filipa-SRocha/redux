@@ -1,25 +1,31 @@
 const INITIAL_STATE = {
-	token: '',
-	isLogged: false,
-	isLoading: true,
+	auth: {
+		token: '',
+		isLogged: false,
+		isLoading: true,
+	},
 };
 
 function authReducer(state = INITIAL_STATE, action) {
 	if (action.type === 'SET_LOGIN') {
 		return {
-			token: action.token,
-			isLogged: true,
-			isLoading: false,
+			auth: {
+				token: action.token,
+				isLogged: true,
+				isLoading: false,
+			},
 		};
 	}
 
-	// if (action.type === 'DELETE_LESSON') {
-	// 	return {
-	// 		...state,
-	// 		activeLesson: null,
-	// 		activeModule: null,
-	// 	};
-	// }
+	if (action.type === 'SET_LOGOUT') {
+		return {
+			auth: {
+				token: '',
+				isLogged: false,
+				isLoading: true,
+			},
+		};
+	}
 
 	return state;
 }
