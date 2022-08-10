@@ -27,6 +27,16 @@ function authReducer(state = INITIAL_STATE, action) {
 		};
 	}
 
+	if (action.type === 'NEW_USER') {
+		return {
+			auth: {
+				token: '',
+				isLogged: false,
+				isLoading: false,
+			},
+		};
+	}
+
 	return state;
 }
 

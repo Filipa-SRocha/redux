@@ -11,6 +11,7 @@ export async function handleLogin(values, dispatch, navigate) {
 		};
 		dispatch(logado);
 		navigate('/people');
+		return;
 	} catch (error) {
 		console.log('Senha ou login inválido');
 	}
@@ -30,12 +31,31 @@ export function isAuth(dispatch) {
 }
 
 export function handleLogout(dispatch, navigate) {
-	localStorage.removeItem('token');
-	apiDBC.defaults.headers.common['Authorization'] = undefined;
-	const logout = {
-		type: 'SET_LOGOUT',
-	};
+	try {
+		localStorage.removeItem('token');
+		apiDBC.defaults.headers.common['Authorization'] = undefined;
+		const logout = {
+			type: 'SET_LOGOUT',
+		};
 
-	dispatch(logout);
-	navigate('/login');
+		dispatch(logout);
+		// navigate('/login');
+		window.location.href = '/login';
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export async function handleSignup(user, dispatch, navigate) {
+	console.log('user: ', user);
+	try {
+		await apiDBC.post('/auth/create', user);
+		const newUser = {
+			type: 'NEW_USER',
+		};
+		dispatch(newUser);
+		navigate('/');
+	} catch (error) {
+		console.log(error);
+	}
 }

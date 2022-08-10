@@ -10,6 +10,7 @@ import UpdatePerson from './pages/people/UpdatePerson';
 import { GlobalStyle } from './globalStyles.styled';
 import Header from './components/header/Header';
 import NotFoundPage from './pages/notFound/NotFoundPage';
+import NewAccount from './pages/login/NewAccount';
 
 const Routers = ({ auth, dispatch }) => {
 	useEffect(() => {
@@ -36,7 +37,10 @@ const Routers = ({ auth, dispatch }) => {
 						<Route path='/people/update/:idPessoa' element={<UpdatePerson />} />
 					</>
 				) : (
-					<Route path='/login' element={<Login />} />
+					<>
+						<Route path='/login' element={<Login />} />
+						<Route path='/new-account' element={<NewAccount />} />
+					</>
 				)}
 				<Route path='*' element={<NotFoundPage />} />
 			</Routes>
