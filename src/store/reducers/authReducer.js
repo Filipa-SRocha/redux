@@ -22,7 +22,7 @@ function authReducer(state = INITIAL_STATE, action) {
 			auth: {
 				token: '',
 				isLogged: false,
-				isLoading: true,
+				isLoading: false,
 			},
 		};
 	}

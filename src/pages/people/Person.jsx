@@ -6,8 +6,7 @@ const Person = ({ person }) => {
 	const cpf = addCpfMask(person.cpf);
 
 	return (
-		<>
-			{/* <PersonInfoContainer> */}
+		<PersonInfoContainer>
 			<div>
 				<small>Nome</small>
 				<p>{person.nome}</p>
@@ -24,8 +23,7 @@ const Person = ({ person }) => {
 				<small>Email</small>
 				<p>{person.email}</p>
 			</div>
-			{/* </PersonInfoContainer> */}
-		</>
+		</PersonInfoContainer>
 	);
 };
 export default Person;

@@ -1,7 +1,11 @@
 import { CrudActionButton } from '../../components/button/Buttons';
+import { useEffect } from 'react';
 import Person from './Person';
+import { getPeople } from '../../store/actions/peopleAction';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import { deletePerson } from '../../store/actions/peopleAction';
+import { useNavigate } from 'react-router-dom';
 
 import {
 	Container,
@@ -9,40 +13,77 @@ import {
 	ListItemContainer,
 	PersonContainer,
 } from './People.styled';
+import { connect } from 'react-redux';
 
-const ListPeople = ({ people }) => {
-	//const { handleDelete, handleEdit } = useContext(PeopleContext);
-	const handleEdit = () => {};
-	const handleDelete = () => {};
+const ListPeople = ({ people, dispatch }) => {
+	const navigate = useNavigate();
 
-	console.log('aqui', people);
+	useEffect(() => {
+		getPeople(dispatch);
+	}, []);
+
+	const handleEdit = (idPessoa) => {
+		navigate(`/people/update/${idPessoa}`);
+	};
+
+	const handleDelete = (idPessoa) => {
+		deletePerson(idPessoa, dispatch, navigate);
+	};
+
 	return (
-		<>
-			{people && people.length > 0 ? (
-				people.map((person) => {
-					return (
-						<>
-							<Person person={person} />
-						</>
-					);
-				})
-			) : (
-				<h1>Nothing here</h1>
-			)}
-		</>
-
-		// <>
-		// 	<h1>Listagem</h1>
-		// 	{people && people.length > 0 ? (
-		// 		people.map((person) => {
-		// 			console.log(person);
-		// 			// return <h1>{person.nome}</h1>;
-		// 			return <Person person={person} />;
-		// 		})
-		// 	) : (
-		// 		<h1>Nothing here</h1>
-		// 	)}
-		// </>
+		<Container>
+			<ul>
+				{people.map((person) => (
+					<>
+						<ListItemContainer key={person.idPessoa}>
+							<PersonContainer>
+								<Person person={person} />
+								<ButtonContainer>
+									<CrudActionButton
+										text='Editar'
+										icon='edit'
+										borderColor='grey'
+										onClick={() => {
+											handleEdit(person.idPessoa);
+										}}
+									></CrudActionButton>
+									<CrudActionButton
+										text='Excluir'
+										icon='delete'
+										backgroundColor='#BD322B'
+										color='white'
+										id={person.idPessoa}
+										onClick={() => {
+											confirmAlert({
+												title: 'Eliminar',
+												message: `Quer mesmo eliminar ${person.nome}?`,
+												buttons: [
+													{
+														label: 'Sim',
+														onClick: () => handleDelete(person.idPessoa),
+													},
+													{
+														label: 'Não',
+														onClick: () => {
+															return;
+														},
+													},
+												],
+											});
+										}}
+									></CrudActionButton>
+								</ButtonContainer>
+							</PersonContainer>
+						</ListItemContainer>
+					</>
+				))}
+			</ul>
+		</Container>
 	);
 };
-export default ListPeople;
+
+const mapStateToProps = (state) => ({
+	people: state.peopleReducer.peopleList,
+});
+
+export default connect(mapStateToProps)(ListPeople);
