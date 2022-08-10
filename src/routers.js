@@ -9,6 +9,7 @@ import { isAuth } from './store/actions/authAction';
 import UpdatePerson from './pages/people/UpdatePerson';
 import { GlobalStyle } from './globalStyles.styled';
 import Header from './components/header/Header';
+import NotFoundPage from './pages/notFound/NotFoundPage';
 
 const Routers = ({ auth, dispatch }) => {
 	useEffect(() => {
@@ -37,6 +38,7 @@ const Routers = ({ auth, dispatch }) => {
 				) : (
 					<Route path='/login' element={<Login />} />
 				)}
+				<Route path='*' element={<NotFoundPage />} />
 			</Routes>
 		</BrowserRouter>
 	);
