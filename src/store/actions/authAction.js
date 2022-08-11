@@ -11,7 +11,6 @@ export async function handleLogin(values, dispatch, navigate) {
 		};
 		dispatch(logado);
 		navigate('/people');
-		return;
 	} catch (error) {
 		console.log('Senha ou login inválido');
 	}
@@ -54,7 +53,7 @@ export async function handleSignup(user, dispatch, navigate) {
 			type: 'NEW_USER',
 		};
 		dispatch(newUser);
-		navigate('/');
+		navigate('/login');
 	} catch (error) {
 		console.log(error);
 	}

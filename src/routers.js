@@ -11,6 +11,9 @@ import { GlobalStyle } from './globalStyles.styled';
 import Header from './components/header/Header';
 import NotFoundPage from './pages/notFound/NotFoundPage';
 import NewAccount from './pages/login/NewAccount';
+import RegisterAddressPage from './pages/address/RegisterAddressPage';
+import PersonalPage from './pages/personalPage';
+import UpdateAddress from './pages/address/UpdateAddress';
 
 const Routers = ({ auth, dispatch }) => {
 	useEffect(() => {
@@ -35,6 +38,12 @@ const Routers = ({ auth, dispatch }) => {
 							element={<RegisterPerson />}
 						/>
 						<Route path='/people/update/:idPessoa' element={<UpdatePerson />} />
+						<Route
+							path='/new-address/:idPessoa'
+							element={<RegisterAddressPage />}
+						/>
+						<Route path='/personal/:idPessoa' element={<PersonalPage />} />
+						<Route path='/address/update' element={<UpdateAddress />} />
 					</>
 				) : (
 					<>

@@ -45,10 +45,7 @@ export async function registerPerson(person, resetForm, dispatch, navigate) {
 export async function deletePerson(idPessoa, dispatch, navigate) {
 	try {
 		await apiDBC.delete(`/pessoa/${idPessoa}`);
-		const deletePerson = {
-			type: 'DELETE_PERSON',
-		};
-		dispatch(deletePerson);
+
 		getPeople(dispatch);
 		navigate('/people');
 	} catch (error) {
@@ -63,6 +60,21 @@ export async function getPerson(idPessoa, dispatch) {
 		);
 		const person = {
 			type: 'GET_PERSON',
+			person: { ...data[0] },
+		};
+		dispatch(person);
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export async function getPersonByID(idPessoa, dispatch) {
+	try {
+		const { data } = await apiDBC.get(
+			`/pessoa/lista-completa?idPessoa=${idPessoa}`
+		);
+		const person = {
+			type: 'GET_PERSON_BY_ID',
 			person: { ...data[0] },
 		};
 		dispatch(person);

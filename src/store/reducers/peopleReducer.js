@@ -22,6 +22,13 @@ function peopleReducer(state = INITIAL_STATE, action) {
 		};
 	}
 
+	if (action.type === 'GET_PERSON_BY_ID') {
+		return {
+			...state,
+			person: action.person,
+		};
+	}
+
 	if (action.type === 'NEW_PERSON') {
 		return { ...state, person: action.person };
 	}
@@ -39,10 +46,6 @@ function peopleReducer(state = INITIAL_STATE, action) {
 			...state,
 			isEditMode: false,
 		};
-	}
-
-	if (action.type === 'DELETE_PERSON') {
-		return { ...state };
 	}
 
 	return state;

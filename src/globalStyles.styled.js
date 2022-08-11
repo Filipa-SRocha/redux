@@ -7,5 +7,6 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     font-family: 'Mulish', sans-serif;
     text-decoration: none;
+    list-style: none;
   }
 `;

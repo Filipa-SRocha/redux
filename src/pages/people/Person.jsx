@@ -2,6 +2,8 @@ import { PersonInfoContainer } from './People.styled';
 import { addCpfMask, displayDatePortuguese } from '../../utils/mascaras';
 
 const Person = ({ person }) => {
+	console.log(person);
+
 	const ptDate = displayDatePortuguese(person.dataNascimento);
 	const cpf = addCpfMask(person.cpf);
 

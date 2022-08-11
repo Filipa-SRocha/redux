@@ -12,10 +12,11 @@ import {
 	ButtonContainer,
 	ListItemContainer,
 	PersonContainer,
+	Details,
 } from './People.styled';
 import { connect } from 'react-redux';
 
-const ListPeople = ({ people, dispatch }) => {
+const ListPeople = ({ people, adressesMap, dispatch }) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -28,6 +29,10 @@ const ListPeople = ({ people, dispatch }) => {
 
 	const handleDelete = (idPessoa) => {
 		deletePerson(idPessoa, dispatch, navigate);
+	};
+
+	const handleDetails = (idPessoa) => {
+		navigate(`/personal/${idPessoa}`);
 	};
 
 	return (
@@ -74,6 +79,11 @@ const ListPeople = ({ people, dispatch }) => {
 									></CrudActionButton>
 								</ButtonContainer>
 							</PersonContainer>
+							<Details>
+								<button onClick={() => handleDetails(person.idPessoa)}>
+									Detalhes
+								</button>
+							</Details>
 						</ListItemContainer>
 					</>
 				))}
@@ -84,6 +94,7 @@ const ListPeople = ({ people, dispatch }) => {
 
 const mapStateToProps = (state) => ({
 	people: state.peopleReducer.peopleList,
+	adressesMap: state.addressReducer.adressesMap,
 });
 
 export default connect(mapStateToProps)(ListPeople);
